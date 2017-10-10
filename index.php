@@ -29,7 +29,7 @@ if(isset($_POST['showfeed'])){
   $Url->setNewUrl("https://news.google.com/news/rss/?ned=us&hl=en");
   $url= $Url->getUrl();
   $xml_to_array= (array)simplexml_load_file($url);
-//var_dump($xml_to_array);
+//var_dump($xml_to_array); ANVÄND BARA DECODE OCH ENCODE INTE =(ARRAY)
 $xml=json_decode(json_encode($xml_to_array));
 foreach($xml->channel->item as $read){
   $title=$read->title;
