@@ -1,24 +1,42 @@
 <?php include "classUrl.php";?>
 <?php include "newXmlstream.php";?>
 
+
 <?php
 $Url = new Url;
 $Url->setNewUrl("https://news.google.com/news/rss/?ned=us&hl=en");
 $url= $Url->getUrl();
-$xml_to_array= simplexml_load_file($url);
+$xml= simplexml_load_file($url);
 
-
-$xml=json_decode(json_encode($xml_to_array),true);
-
-function my_sort($a, $b){
-    if ($a->pubDate-> == $b->pubDate) {
-        return 0;
-    }
-    return ($a->pubDate < $b->pubDate) ? -1 : 1;
+/*
+$items=array();
+foreach ($xml->channel->item as $read) {
+  $items[] = $read;
+  # code...
 }
 
-usort($xml->item, "my_sort");
+usort($items,function($a,$b){
+  return strcmp($a['pubDate'],$b['pubDate']);
+});
+*/
+//$xml=json_decode(json_encode($xml_to_array),true);
+ $order= $xml->XPath('/channel/items');
+foreach($order as $read){
+echo $read->asXML(),"<br>";
+print_r($read);
+}
 
+
+
+
+
+/*
+function my_sort($a, $b){
+    return strcmp($a['pubDate'],$b['pubDate']);
+}
+usort($order,'my_sort');
+ echo $order
+*/
 
 /*$sort=array();
 foreach((array) (isset($xml['item'])) as $items){
