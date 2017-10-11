@@ -9,10 +9,10 @@ public function __construct($Sort_by){
   $this->Sort_by=$Sort_by;
 }
 
-public function SortMethod(){
+  public function SortMethod(){
   switch ($this->Sort_by) {
     case 'pubDate':
-      
+
       break;
       case 'title';
 

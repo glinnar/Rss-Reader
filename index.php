@@ -28,9 +28,18 @@ if(isset($_POST['showfeed'])){
   $Url = new Url;
   $Url->setNewUrl("https://news.google.com/news/rss/?ned=us&hl=en");
   $url= $Url->getUrl();
-  $xml_to_array= (array)simplexml_load_file($url);
-//var_dump($xml_to_array); ANVÄND BARA DECODE OCH ENCODE INTE =(ARRAY)
-$xml=json_decode(json_encode($xml_to_array));
+  $xml_to_array= simplexml_load_file($url);
+//var_dump($xml_to_array);
+
+
+/*
+  function my_sort($a,$b){
+    return $b->pubDate -$a->pubDate;
+  }
+  $a=(array)simplexml_load_file($url);
+  usort($a,"my_sort");
+*/
+$xml=json_decode(json_encode($xml_to_array),true);
 foreach($xml->channel->item as $read){
   $title=$read->title;
   $link =$read->link;
@@ -40,22 +49,11 @@ foreach($xml->channel->item as $read){
   $description=$read->description;
 
 $html= $title. $link.$guid.$category.$pubDate.$description;
-echo "<p>".$html,"</p>","</br>";
+echo "<pre>";
+print_r($xml);
+echo"</pre>";
+//echo "<p>".$html,"</p>","</br>";
 }
-
-/*
-  function my_sort($a,$b){
-    if($a==$b)return 0;
-    return($a<$b)?-1:1;
-  }
-  $a=(array)simplexml_load_file($url);
-  usort($a,"my_sort");
-  $arrlength=count($a);
-  for($x=0;$x<$arrlength;$x++){
-    print_r ($a[$x]);
-    echo "<br>";
-  }
-*/
 
 /*  $present = new View($View_format);
   $present->ViewMethod();
@@ -82,7 +80,7 @@ else if($Option =="Aftonbladet") {
   $Url2 ->setNewUrl("http://www.aftonbladet.se/sportbladet/rss.xml");
   $url2=$Url2->getUrl();
   $xml2=simplexml_load_file($url2);
-  foreach($xml2->channel->item as $read2){
+    foreach($xml2->channel->item as $read2){
     $link2 =$read2->link;
     $guid2=$read2->guid;
     $category2=$read2->category2;
@@ -92,8 +90,8 @@ else if($Option =="Aftonbladet") {
 
   $html2= $title2. $link2.$guid2.$pubDate2.$description2;
     echo "<p>".$html2,"</br>","</p>","</br>";
+    }
   }
-}
 }
 
 ?>
