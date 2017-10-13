@@ -12,7 +12,7 @@
       <option value="plain_text">Text</option>
     </select>
     <select class="" name="Sort_by">
-      <option value="pubdDate">Publication Date</option>
+      <option value="pubDate">Publication Date</option>
       <option value="title">Title</option>
     </select>
     <input type="submit"id="showfeed" name="showfeed" value="Show Feed">
