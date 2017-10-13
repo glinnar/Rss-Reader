@@ -5,10 +5,11 @@
 <?php
 $Url = new Url;
 $Url->setNewUrl("https://news.google.com/news/rss/?ned=us&hl=en");
-$url= $Url->getUrl();
+$urll= $Url->getUrl();
+$url=("http://feeds.bbci.co.uk/news/rss.xml");
 $xml= simplexml_load_file($url);
 
-/*
+
 $items=array();
 foreach ($xml->channel->item as $read) {
   $items[] = $read;
@@ -16,15 +17,19 @@ foreach ($xml->channel->item as $read) {
 }
 
 usort($items,function($a,$b){
-  return strcmp($a['pubDate'],$b['pubDate']);
+  return strcmp($a->pubDate,$b->pubDate);
 });
-*/
+
+echo"<pre>";
+print_r($items);
+echo"</pre>";
+
 //$xml=json_decode(json_encode($xml_to_array),true);
- $order= $xml->XPath('/channel/items');
+ /*$order= $xml->XPath('/channel/items');
 foreach($order as $read){
 echo $read->asXML(),"<br>";
 print_r($read);
-}
+}*/
 
 
 

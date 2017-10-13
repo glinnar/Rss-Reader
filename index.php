@@ -37,9 +37,10 @@ foreach($xml->channel->item as $read){
   $guid=$read->guid;
   $category=$read->category;
   $pubDate=$read->pubDate;
+  $media=$read->media;
   $description=$read->description;
 
-$html= $title. $link.$guid.$category.$pubDate.$description;
+$html= $title. $link.$guid.$category.$pubDate.$media.$description;
 echo "<p>".$html,"</p>","</br>";
 }
 
