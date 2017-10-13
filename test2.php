@@ -21,62 +21,62 @@
 <?php
 
   if(isset($_POST['showfeed'])){
-  $option = $_POST['feed'];
-  $sort = $_POST['sort_By'];
+    $option = $_POST['feed'];
+    $sort = $_POST['sort_By'];
 
-  if($option=="1"){
+    if($option=="1"){
 
-$url=("http://feeds.bbci.co.uk/news/rss.xml") or die("Cannot load Rss feed");
-$xml= simplexml_load_file($url);
+      $url=("http://feeds.bbci.co.uk/news/rss.xml") or die("Cannot load Rss feed");
+      $xml= simplexml_load_file($url);
 
 }
-    $items=array();
-    foreach ($xml->channel->item as $read) {
+      $items=array();
+      foreach ($xml->channel->item as $read) {
       $items[] = $read;
       # code...
     }
 
 // Sortera på publiceringsDatum
-  if($Sort=="pubDate"){
+      if($Sort=="pubDate"){
           usort($items,function($a,$b){
           return strtotime(str_replace('/', '-', $b->pubDate)) - strtotime(str_replace('/', '-', $a->pubDate));
-});
-print_r($items);
-}
-  elseif ($sort=="title") {
-    // Sorterar på Title
-    usort($items,function($c,$d){
-    return strcasecmp($c->title,$d->title);
-    });
+        });
+
+      }
+      elseif ($sort=="title") {
+      // Sorterar på Title
+      usort($items,function($c,$d){
+      return strcasecmp($c->title,$d->title);
+      });
 
 }
 
-foreach($items as $item){
-  $title=$item->title;
-  $link =$item->link;
-  $guid=$item->guid;
-  $category=$item->category;
-  $pubDate=$item->pubDate;
-  $media=$item->media;
-  $description=$item->description;
-  $html= $title. $link.$guid.$category.$pubDate.$media.$description;
+    foreach($items as $item){
+      $title=$item->title;
+      $link =$item->link;
+      $guid=$item->guid;
+      $category=$item->category;
+      $pubDate=$item->pubDate;
+      $media=$item->media;
+      $description=$item->description;
+      $html= $title. $link.$guid.$category.$pubDate.$media.$description;
 
-echo "<h1>".$html,"</h1>","</br>";
+      echo "<h1>".$html,"</h1>","</br>";
 }
-else if($option =="2") {
-    $url2 =("http://www.aftonbladet.se/sportbladet/rss.xml");
-    $xml2=simplexml_load_file($url2);
-    $items2=array();
+    else if($option =="2") {
+        $url2 =("http://www.aftonbladet.se/sportbladet/rss.xml");
+        $xml2=simplexml_load_file($url2);
+        $items2=array();
 
-    foreach ($xml2->channel->item as $read2) {
-      $items2[] = $read2;
+        foreach ($xml2->channel->item as $read2) {
+          $items2[] = $read2;
     # code...
-  }
-  if($Sort=="pubDate"){
+}
+    if($Sort=="pubDate"){
   // Sortera på publiceringsDatum
-  usort($items2,function($e,$f){
-    return strtotime(str_replace('/', '-', $f->pubDate)) - strtotime(str_replace('/', '-', $e->pubDate));
-  });
+      usort($items2,function($e,$f){
+        return strtotime(str_replace('/', '-', $f->pubDate)) - strtotime(str_replace('/', '-', $e->pubDate));
+      });
   }
 
     elseif ($Sort=="title") {
@@ -85,16 +85,16 @@ else if($option =="2") {
     });
   }
 
-  foreach($items2 as $item2){
-    $link2 =$item2->link;
-    $guid2=$item2->guid;
-    $category2=$item2->category2;
-    $title2=$item2->title;
-    $pubDate2=$item2->pubDate;
-    $description2=$item2->description;
+    foreach($items2 as $item2){
+      $link2 =$item2->link;
+      $guid2=$item2->guid;
+      $category2=$item2->category2;
+      $title2=$item2->title;
+      $pubDate2=$item2->pubDate;
+      $description2=$item2->description;
 
-    $html2= $title2. $link2.$guid2.$pubDate2.$description2;
-    echo "<p>".$html2,"</br>","</p>","</br>";
+      $html2= $title2. $link2.$guid2.$pubDate2.$description2;
+      echo "<p>".$html2,"</br>","</p>","</br>";
     }
   }
 }
