@@ -2,7 +2,7 @@
 <?php include "newXmlstream.php";?>
 
 
-<form class="" action="test.php" method="post">
+<form class="" action="test2.php" method="post">
   <select class="" name="Rss-feed">
       <option value="1">Google</option>
       <option value="2">Aftonbladet</option>
@@ -18,8 +18,8 @@
     <input type="submit"id="showfeed" name="showfeed" value="Show Feed">
   </select>
 </form>
-
 <?php
+
 if(isset($_POST['showfeed'])){
   $Option = $_POST['Rss-feed'];
   $Sort = $_POST['Sort_by'];
@@ -27,25 +27,26 @@ if(isset($_POST['showfeed'])){
   if($Option =="1"){
 $url=("http://feeds.bbci.co.uk/news/rss.xml") or die("Cannot load Rss feed");
 $xml= simplexml_load_file($url);
+
+
 $items=array();
 foreach ($xml->channel->item as $read) {
   $items[] = $read;
   # code...
 }
-if($Sort=="pubDate"){
 // Sortera på publiceringsDatum
 usort($items,function($a,$b){
   return strtotime(str_replace('/', '-', $b->pubDate)) - strtotime(str_replace('/', '-', $a->pubDate));
 });
 
 }
-
 elseif ($Sort=="title") {
-  usort($items,function($c,$d){
-    return strcasecmp($c->title,$d->title);
-  });
-}
+// Sorterar på Title
+usort($items,function($c,$d){
+  return strcasecmp($c->title,$d->title);
+});
 
+}
 foreach($items as $item){
   $title=$item->title;
   $link =$item->link;
@@ -56,43 +57,47 @@ foreach($items as $item){
   $description=$item->description;
 
 $html= $title. $link.$guid.$category.$pubDate.$media.$description;
+reset($item);
 echo "<h1>".$html,"</h1>","</br>";
+
 }
+
 }
-/*
-else if($Option =="2") {
-  $url2 =("http://www.aftonbladet.se/sportbladet/rss.xml");
-  $xml2=simplexml_load_file($url2);
-  $items2=array();
-  foreach ($xml2->channel->item as $read2) {
-    $items2[] = $read2;
-    # code...
-  }
-  if($Sort=="pubDate"){
-  // Sortera på publiceringsDatum
-  usort($items2,function($e,$f){
-    return strtotime(str_replace('/', '-', $e->pubDate)) - strtotime(str_replace('/', '-', $f->pubDate));
-  });
-  }
 
-  elseif ($Sort=="title") {
-    usort($items2,function($g,$h){
-      return strcasecmp($g->title,$h->title);
-    });
-  }
-
-  foreach($xml2->channel->item as $read2){
-    $link2 =$read2->link;
-    $guid2=$read2->guid;
-    $category2=$read2->category2;
-    $title2=$read2->title;
-    $pubDate2=$read2->pubDate;
-    $description2=$read2->description;
-
-  $html2= $title2. $link2.$guid2.$pubDate2.$description2;
-    echo "<p>".$html2,"</br>","</p>","</br>";
-  }
+//$xml=json_decode(json_encode($xml_to_array),true);
+ /*$order= $xml->XPath('/channel/items');
+foreach($order as $read){
+echo $read->asXML(),"<br>";
+print_r($read);
 }*/
-}
 
-?>
+
+
+
+
+/*
+function my_sort($a, $b){
+    return strcmp($a['pubDate'],$b['pubDate']);
+}
+usort($order,'my_sort');
+ echo $order
+*/
+
+/*$sort=array();
+foreach((array) (isset($xml['item'])) as $items){
+  $sort[] =$items;
+}
+function cmp($a,$b){
+  if((string)$a->pubDate ==(string)$b->pubDate){
+
+  return 0;
+
+}
+return ((string) $a->pubDate<(string)$b->pubDate)?-1:1;
+}
+usort($sort,'cmp');
+foreach($sort as $key =>$value){
+  echo"$key: $value->pubDate<br>";
+}
+*/
+ ?>
