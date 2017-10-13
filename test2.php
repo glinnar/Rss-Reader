@@ -29,13 +29,13 @@
       $url=("http://feeds.bbci.co.uk/news/rss.xml") or die("Cannot load Rss feed");
       $xml= simplexml_load_file($url);
 
-                    }
+    }
 
       $items=array();
       foreach ($xml->channel->item as $read) {
         $items[] = $read;
-      # code...
-                                            }
+
+      }
 
         // Sortera på publiceringsDatum
       if($Sort=="pubDate"){
@@ -48,9 +48,9 @@
       // Sorterar på Title
         usort($items,function($c,$d){
           return strcasecmp($c->title,$d->title);
-                              });
+        });
 
-                              }
+      }
 
       foreach($items as $item){
         $title=$item->title;
@@ -63,29 +63,28 @@
         $html= $title. $link.$guid.$category.$pubDate.$media.$description;
 
         echo "<h1>".$html,"</h1>","</br>";
-                            }
+      }
 
     else if($option =="2") {
         $url2 =("http://www.aftonbladet.se/sportbladet/rss.xml");
         $xml2=simplexml_load_file($url2);
         $items2=array();
 
-          foreach ($xml2->channel->item as $read2) {
-            $items2[] = $read2;
-    # code...
-                                                  }
+        foreach ($xml2->channel->item as $read2) {
+          $items2[] = $read2;
+          }
     if($Sort=="pubDate"){
         // Sortera på publiceringsDatum
         usort($items2,function($e,$f){
           return strtotime(str_replace('/', '-', $f->pubDate)) - strtotime(str_replace('/', '-', $e->pubDate));
-                                      });
-                                      }
+        });
+      }
 
     elseif ($Sort=="title") {
         usort($items2,function($g,$h){
           return strcasecmp($g->title,$h->title);
-                                    });
-                            }
+        });
+    }
 
     foreach($items2 as $item2){
         $link2 =$item2->link;
@@ -97,9 +96,9 @@
 
         $html2= $title2. $link2.$guid2.$pubDate2.$description2;
         echo "<p>".$html2,"</br>","</p>","</br>";
-                            }
-                        }
-                      }
+      }
+    }
+  }
 
 
 /*if(php_sapi_name()=="cli"){
