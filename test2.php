@@ -42,14 +42,12 @@
           usort($items,function($a,$b){
             return strtotime(str_replace('/', '-', $b->pubDate)) - strtotime(str_replace('/', '-', $a->pubDate));
         });
-
       }
       elseif ($sort=="title") {
       // Sorterar på Title
         usort($items,function($c,$d){
           return strcasecmp($c->title,$d->title);
         });
-
       }
 
       foreach($items as $item){
