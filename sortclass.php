@@ -1,44 +1,24 @@
 <?php
+class Sort {
 
-class Sort{
+    public function sort_ByPubDate(&$items) {
+        usort($items, function($a, $b) {
+            if (strtotime($a->pubDate) == strtotime($b->pubDate)) {
+                return 0;
+            }
+            return strtotime($a->pubDate) > strtotime($b->pubDate) ? -1 : 1;
+        });
+    }
 
-
-public $items=array();
-public $xml;
-public $read;
-public $item;
-public $Sort_by;
-
-public function __construct($items,$xml,$read,$item,$Sort_by){
-  $this->items=$items;
-  $this->xml=$xml;
-  $this->read=$read;
-  $this->item=$item;
-  $this->Sort_by=$Sort_by;
+    public function sort_ByTitle(&$items) {
+        usort($items, function($a, $b) {
+            if ($a->title == $b->title) {
+                return 0;
+            }
+        return (string) $a->title < (string) $b->title ? -1 : 1;
+            //return $a->title->__toString() < $b->title->__toString() ? -1 : 1;
+        });
+    }
 }
 
-public function SortMethod(){
-  foreach ($xml->channel->item as $read) {
-    $items[] = $read;
-  switch ($this->Sort_by) {
-    case 'pubDate':
-      usort($items,function($a,$b){
-        return strtotime(str_replace('/', '-', $a->pubDate)) - strtotime(str_replace('/', '-', $b->pubDate));
-      });
-      break;
-      case 'title';
-      usort($items,function($c,$d){
-        return strcasecmp($c->title,$d->title);
-      });
-
-      break;
-
-    default:
-      $err ="Something went wrong";
-      break;
-  }
-}
-
-}
-}
 ?>
