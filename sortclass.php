@@ -1,7 +1,7 @@
 <?php
 class Sort {
-
-    public function sort_ByPubDate(&$items) {
+        // Sorterar på PubliceringsDatum
+    public function sort_By_pubDate(&$items) {
         usort($items, function($a, $b) {
             if (strtotime($a->pubDate) == strtotime($b->pubDate)) {
                 return 0;
@@ -9,14 +9,13 @@ class Sort {
             return strtotime($a->pubDate) > strtotime($b->pubDate) ? -1 : 1;
         });
     }
-
-    public function sort_ByTitle(&$items) {
+     // Sorterar på Titel
+    public function sort_By_Title(&$items) {
         usort($items, function($a, $b) {
             if ($a->title == $b->title) {
                 return 0;
             }
-        return (string) $a->title < (string) $b->title ? -1 : 1;
-            //return $a->title->__toString() < $b->title->__toString() ? -1 : 1;
+            return $a->title->__toString() < $b->title->__toString() ? -1 : 1;
         });
     }
 }

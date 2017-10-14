@@ -1,17 +1,13 @@
-  <?php include "classUrl.php";?>
+
   <?php include "sortclass.php";?>
+  <?php include "header.php";?>
 
-
-  <form class="" action="index.php" method="post">
-    <select class="" name="feed">
+  <form action="index.php" method="post">
+    <select name="feed">
         <option value="http://feeds.bbci.co.uk/news/rss.xml">BBC</option>
         <option value="http://www.aftonbladet.se/sportbladet/rss.xml">Sportbladet</option>
       </select>
-      <select class="" name="View_format">
-        <option value="html_format">Html</option>
-        <option value="plain_text">Text</option>
-      </select>
-      <select class="" name="sort_By">
+      <select name="sort_By">
         <option value="pubDate">Publication Date</option>
         <option value="title">Title</option>
       </select>
@@ -25,18 +21,19 @@
       $sort = $_POST['sort_By'];
 
         $xml=simplexml_load_file($option);
+        // Skapar Array för att kunna sortera xml data
         $items=array();
         foreach ($xml->channel->item as $read) {
           $items[] = $read;
 
         }
-          $obj= new Sort();
+          $sorting= new Sort();
           // Sortera på publiceringsDatum
         if($sort=="pubDate"){
-          $obj->sort_ByPubDate($items);
+          $sorting->sort_By_pubDate($items);
         }
         elseif ($sort=="title") {
-          $obj->sort_ByTitle($items);
+          $sorting->sort_By_Title($items);
 
         }
 
@@ -50,7 +47,7 @@
           $description=$item->description;
           $html= $title. $link.$guid.$category.$pubDate.$media.$description;
 
-          echo "<h1>".$html,"</h1>","</br>";
+          echo "<h1>".$html,"</h1>", "\n";
         }
 
 
@@ -60,21 +57,7 @@
     }
 
 
-  /*if(php_sapi_name()=="cli"){
 
-    foreach($xml->channel->item as $read){
-      $title=$read->title;
-      $link =$read->link;
-      $guid=$read->guid;
-      $category=$read->category;
-      $pubDate=$read->pubDate;
-      $media=$read->media;
-      $description=$read->description;
-
-    $html= $title. $link.$guid.$category.$pubDate.$media.$description;
-    echo "<p>".$html,"</p>","</br>";
-    }
-
-  }*/
 
    ?>
+     <?php include "footer.php";?>

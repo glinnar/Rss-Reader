@@ -1,5 +1,5 @@
 <?php
-include "classUrl.php";
+
 
 header('Location: index.php');
 ?>
