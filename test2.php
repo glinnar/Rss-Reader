@@ -4,8 +4,8 @@
 
   <form class="" action="test2.php" method="post">
     <select class="" name="feed">
-        <option value="1">Google</option>
-        <option value="2">Aftonbladet</option>
+        <option value="http://feeds.bbci.co.uk/news/rss.xml">BBC</option>
+        <option value="http://www.aftonbladet.se/sportbladet/rss.xml">Sportbladet</option>
       </select>
       <select class="" name="View_format">
         <option value="html_format">Html</option>
@@ -24,13 +24,7 @@
       $option = $_POST['feed'];
       $sort = $_POST['sort_By'];
 
-      if($option=="1"){
-
-        $url=("http://feeds.bbci.co.uk/news/rss.xml") or die("Cannot load Rss feed");
-        $xml= simplexml_load_file($url);
-
-
-
+        $xml=simplexml_load_file('option');
         $items=array();
         foreach ($xml->channel->item as $read) {
           $items[] = $read;
@@ -62,11 +56,11 @@
 
           echo "<h1>".$html,"</h1>","</br>";
         }
-      }
 
-      else if($option=="2") {
-          $url2 =("http://www.aftonbladet.se/sportbladet/rss.xml");
-          $xml2=simplexml_load_file($url2);
+
+
+
+          $xml2=simplexml_load_file('option');
           $items2=array();
 
           foreach ($xml2->channel->item as $read2) {
@@ -96,7 +90,7 @@
           $html2= $title2. $link2.$guid2.$pubDate2.$description2;
           echo "<p>".$html2,"</br>","</p>","</br>";
         }
-      }
+
     }
 
 
